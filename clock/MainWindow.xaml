@@ -44,15 +44,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="32" MaxHeight="64"/>
                 </Grid.RowDefinitions>
-                <ListBox x:Name="lstWindows" KeyDown="lstWindows_KeyDown" ScrollViewer.VerticalScrollBarVisibility="Visible" >
-                    <ListBox.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Name="mitmTopOfMost" Header="最前面に固定" IsCheckable="True" Click="mitmTopOfMost_Click" />
-                            <Separator/>
-                            <MenuItem Name="mitmMinimize" Header="最小化" Click="mitmMinimize_Click" />
-                            <MenuItem Name="mitmNormal" Header="通常表示" Click="mitmNormal_Click" />
-                        </ContextMenu>
-                    </ListBox.ContextMenu>
+                <ListBox x:Name="lstWindows" KeyDown="lstWindows_KeyDown" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="lstWindows_MouseDoubleClick" >
                 </ListBox>
             </Grid>
             <Grid x:Name="pnlButton" Height="28" Width="Auto" VerticalAlignment="Bottom" Margin="0">

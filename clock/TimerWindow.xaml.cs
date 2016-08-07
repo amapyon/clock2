@@ -93,5 +93,20 @@ namespace clock
         {
             throw new NotImplementedException();
         }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            Console.WriteLine("[TimerWindow]KeyDown");
+
+            UiUtil.KeyDownHandler(this, e);
+        }
+
+        private void txtMessage_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            Console.WriteLine("[TimerWindow:txtMessage]PreviewKeyDown");
+
+            UiUtil.KeyDownHandler(this, e);
+
+        }
     }
 }

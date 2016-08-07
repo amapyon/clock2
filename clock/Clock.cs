@@ -59,12 +59,16 @@ namespace clock
         {
             while (true)
             {
+                DateTime now = DateTime.Now;
+                string date = now.ToString("yyyy年M月d日(ddd)");
+                string time = now.ToString("H:mm:ss");
+
                 foreach (ITimerWindow w in windows)
                 {
                     w.Dispatcher.Invoke((Action)(() =>
                     {
-                        w.DateText.Content = DateTime.Now.ToString("yyyy年M月d日(ddd)");
-                        w.TimeText.Content = DateTime.Now.ToString("H:mm:ss");
+                        w.DateText.Content = date;
+                        w.TimeText.Content = time;
                     }
                     ));
                 }

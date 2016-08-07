@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="clock.TimerWindowControler"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:clock"
+             mc:Ignorable="d" d:DesignWidth="300" Height="20" KeyDown="UserControl_KeyDown">
+    <Grid Height="20" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <CheckBox x:Name="checkBox" Grid.Column="0" Content="最前面に固定" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="4,0" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked"/>
+        <Button x:Name="btnMin" Grid.Column="1" Content="最小化" VerticalAlignment="Top" Margin="0" Click="btnMin_Click"/>
+        <Button x:Name="btnNormal" Grid.Column="2" Content="通常" VerticalAlignment="Top" Margin="0" Click="btnNormal_Click"/>
+        <Button x:Name="btnLeft" Grid.Column="3" Content="←" VerticalAlignment="Top" Margin="0" Click="btnLeft_Click"/>
+        <Button x:Name="btnRight" Grid.Column="6" Content="→" VerticalAlignment="Top" Margin="0" Click="btnRight_Click"/>
+
+    </Grid>
+</UserControl>

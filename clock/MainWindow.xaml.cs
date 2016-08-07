@@ -126,7 +126,12 @@ namespace clock
             TimerWindow w = new TimerWindow();
             windows.Add(w);
             w.SetTitle("[" + (windows.Count - 1) + "]");
-            this.lstWindows.Items.Add(w.GetTitle());
+
+            TimerWindowControler c = new TimerWindowControler(w);
+
+//            this.lstWindows.Items.Add(w.GetTitle());
+            this.lstWindows.Items.Add(c);
+
 
             w.Show();
         }
@@ -178,114 +183,24 @@ namespace clock
 
         private void lstWindows_KeyDown(object sender, KeyEventArgs e)
         {
-            Console.WriteLine(lstWindows.SelectedItem.ToString());
-            Console.WriteLine("KeyDown:[" + Keyboard.Modifiers + "]+" + e.Key);
-
-            TimerWindow targetWindow = getTargeWindow(this.lstWindows.SelectedItem.ToString());
-
-            System.Drawing.Point p = new System.Drawing.Point((int)targetWindow.Left, (int)targetWindow.Top);
-            System.Drawing.Rectangle area = System.Windows.Forms.Screen.GetWorkingArea(p);
-            Console.WriteLine("WorkingArea:" + area);
-
-            System.Windows.PresentationSource s = PresentationSource.FromVisual(targetWindow);
-            double scaleX = s.CompositionTarget.TransformToDevice.M11;
-            double scaleY = s.CompositionTarget.TransformToDevice.M22;
-            Console.WriteLine("Sclae:" + scaleX + ", " + scaleY);
-
-            if ((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None && (Keyboard.Modifiers & ModifierKeys.Shift) != ModifierKeys.None)
-            {
-                if (e.Key == Key.Left)
-                {
-                    targetWindow.Left = area.Left / scaleX;
-                }
-                else if (e.Key == Key.Right)
-                {
-                    targetWindow.Left = ((area.X + area.Width) / scaleX) - targetWindow.Width;
-                }
-                else if (e.Key == Key.Up)
-                {
-                    targetWindow.Top = area.Y / scaleY;
-                }
-                else if (e.Key == Key.Down)
-                {
-                    targetWindow.Top = ((area.Y + area.Height) / scaleY) - targetWindow.Height;
-                }
-
-            }
-            else if ((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None)
-            {
-                if (e.Key == Key.Left)
-                {
-                    targetWindow.Width -= 3;
-                }
-                else if (e.Key == Key.Right)
-                {
-                    targetWindow.Width += 3;
-
-                }
-                else if (e.Key == Key.Up)
-                {
-                    targetWindow.Height -= 3;
-                }
-                else if (e.Key == Key.Down)
-                {
-                    targetWindow.Height += 3;
-                }
-            }
-            else if ((Keyboard.Modifiers & ModifierKeys.Shift) != ModifierKeys.None)
-            {
-                if (e.Key == Key.Left)
-                {
-                    targetWindow.Left -= 3;
-                }
-                else if (e.Key == Key.Right)
-                {
-                    targetWindow.Left += 3;
-
-                }
-                else if (e.Key == Key.Up)
-                {
-                    targetWindow.Top -= 3;
-                }
-                else if (e.Key == Key.Down)
-                {
-                    targetWindow.Top += 3;
-                }
-            }
-            else
-            {
-                if (e.Key == Key.Left)
-                {
-                    targetWindow.sldFontSize.Value -= 1;
-                }
-                else if (e.Key == Key.Right)
-                {
-                    targetWindow.sldFontSize.Value += 1;
-                }
-            }
-            Console.WriteLine("Top:" + targetWindow.Top + ", Left:" + targetWindow.Left + ", Width:" + targetWindow.Width + ", Height:" + targetWindow.Height);
+            ((TimerWindowControler)lstWindows.Items[0]).UserControl_KeyDown(sender, e);
         }
 
-        private void mitmTopOfMost_Click(object sender, RoutedEventArgs e)
+        private void lstWindows_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            TimerWindow targetWindow = getTargeWindow(this.lstWindows.SelectedItem.ToString());
-            if (targetWindow != null)
+            foreach (System.Windows.Forms.Screen s in System.Windows.Forms.Screen.AllScreens)
             {
-                targetWindow.Topmost = mitmTopOfMost.IsChecked;
+                Console.WriteLine("DeviceName:" + s.DeviceName.ToString());
+                Console.WriteLine("WorkingArea Location:" + s.WorkingArea.Location + " Size:" + s.WorkingArea.Size);
+                Console.WriteLine("Bounds Location:" + s.Bounds.Location + " Size:" + s.Bounds.Size);
             }
+            Console.WriteLine("Left:" + this.Left);
 
-        }
-
-        private void mitmMinimize_Click(object sender, RoutedEventArgs e)
-        {
-            TimerWindow targetWindow = getTargeWindow(this.lstWindows.SelectedItem.ToString());
-            targetWindow.WindowState = WindowState.Minimized;
-        }
-
-        private void mitmNormal_Click(object sender, RoutedEventArgs e)
-        {
-            TimerWindow targetWindow = getTargeWindow(this.lstWindows.SelectedItem.ToString());
-            targetWindow.WindowState = WindowState.Normal;
+            {
+                System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)this.Left, (int)this.Top));
+                Console.WriteLine("DeviceName:" + s.DeviceName.ToString());
+                Console.WriteLine("Bounds Location:" + s.Bounds.Location + " Size:" + s.Bounds.Size);
+            }
         }
     }
 }
