@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace clock
 {
@@ -15,10 +16,12 @@ namespace clock
         private static int limitSec;
         private static Stopwatch stopwatch;
 
-        private enum ViewMode { S, MMSS };
-        private static ViewMode viewMode = ViewMode.MMSS;
+        private enum ViewFormat { S, MMSS };
+        private static ViewFormat viewFormat = ViewFormat.MMSS;
 
         private static bool through = false;
+
+        private static Alarm alarm;
 
         private CountDownTimer() { }
 
@@ -33,13 +36,15 @@ namespace clock
             //          w.txtMessage.Text = limit.ToString();
             CountDownTimer.through = through;
             stopwatch = new Stopwatch();
+            alarm = new Alarm();
+
             return instance;
         }
 
         private static int ParseTime(string time)
         {
-            float number = float.Parse(time.Substring(0, time.Length - 1));
-            string unit = time.Substring(time.Length - 1);
+            var number = float.Parse(time.Substring(0, time.Length - 1));
+            var unit = time.Substring(time.Length - 1);
 
             switch (unit)
             {
@@ -81,34 +86,45 @@ namespace clock
         {
             while (true)
             {
-                TimeSpan elapsed = stopwatch.Elapsed;
-                int remainSec = limitSec - (int)elapsed.TotalSeconds;
-                int mm = Math.Abs(remainSec / 60);
-                int ss = Math.Abs(remainSec % 60);
+                var elapsed = stopwatch.Elapsed;
+                var remainSec = limitSec - (int)elapsed.TotalSeconds;
+                var mm = Math.Abs(remainSec / 60);
+                var ss = Math.Abs(remainSec % 60);
 
                 foreach (ITimerWindow w in windows)
                 {
-                    w.Dispatcher.Invoke((Action)(() =>
+                    try
                     {
-                        if (viewMode == ViewMode.S)
+                        w.Dispatcher.Invoke(() =>
                         {
-                            w.TimeText.Content = String.Format("{0:0}", remainSec);
-                            if (remainSec <= 0)
+                            if (viewFormat == ViewFormat.S)
                             {
-                                UiUtil.SetDisableColor(w.TimeText);
+                                w.TimeText.Content = String.Format("{0:0}", remainSec);
+                                if (remainSec <= 0)
+                                {
+                                    UiUtil.SetDisableColor(w.TimeText);
+                                }
                             }
-                        }
-                        else
-                        {
+                            else
+                            {
+                                w.TimeText.Content = String.Format("{0:0}:{1:00}", mm, ss);
+                                if (remainSec <= 0)
+                                {
+                                    UiUtil.SetDisableColor(w.TimeText);
+                                }
+                            }
 
-                            w.TimeText.Content = String.Format("{0:0}:{1:00}", mm, ss);
-                            if (remainSec <= 0)
+                            if (remainSec == 0 && MainWindow.Sound)
                             {
-                                UiUtil.SetDisableColor(w.TimeText);
+                                alarm.RingOnce();
+
                             }
-                        }
+                        });
                     }
-                    ));
+                    catch (TaskCanceledException ex)
+                    {
+                        return;
+                    }
                 }
 
                 if (!isThrough() && remainSec <= 0)
@@ -132,8 +148,8 @@ namespace clock
 
         public void Increment(string time)
         {
-            int sec = 0;
-            MatchCollection mc = Regex.Matches(time, @"(?<minuts>^\d+)(?<unit>分|秒)(?<inc>延長|短縮)");
+            var sec = 0;
+            var mc = Regex.Matches(time, @"(?<minuts>^\d+)(?<unit>分|秒)(?<inc>延長|短縮)");
             if (mc.Count == 1)
             {
                 sec = int.Parse(mc[0].Groups["minuts"].Value);
@@ -154,13 +170,13 @@ namespace clock
 
         public void ChangeFormat()
         {
-            if (viewMode == ViewMode.MMSS)
+            if (viewFormat == ViewFormat.MMSS)
             {
-                viewMode = ViewMode.S;
+                viewFormat = ViewFormat.S;
             }
             else
             {
-                viewMode = ViewMode.MMSS;
+                viewFormat = ViewFormat.MMSS;
             }
         }
 

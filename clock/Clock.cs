@@ -55,29 +55,38 @@ namespace clock
             timerThread.Abort();
         }
 
+        public string Date { get { return DateTime.Now.ToString("yyyy年M月d日(ddd)"); } }
+        public string Time { get { return DateTime.Now.ToString("H:mm:ss"); } }
+
         private void Update()
         {
             while (true)
             {
-                DateTime now = DateTime.Now;
-                string date = now.ToString("yyyy年M月d日(ddd)");
-                string time = now.ToString("H:mm:ss");
+                var now = DateTime.Now;
+                var date = now.ToString("yyyy年M月d日(ddd)");
+                var time = now.ToString("H:mm:ss");
 
                 foreach (ITimerWindow w in windows)
                 {
-                    w.Dispatcher.Invoke((Action)(() =>
+                    try
                     {
-                        w.DateText.Content = date;
-                        w.TimeText.Content = time;
+                        w.Dispatcher.Invoke(() =>
+                        {
+                            w.DateText.Content = date;
+                            w.TimeText.Content = time;
+                        });
                     }
-                    ));
+                    catch (TaskCanceledException ex)
+                    {
+                        return;
+                    }
                 }
                 Thread.Sleep(200);
             }
         }
 
         public void Clear() { }
-        public void Increment(string time) {}
-        public void ChangeFormat() {}
+        public void Increment(string time) { }
+        public void ChangeFormat() { }
     }
 }

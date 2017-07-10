@@ -16,32 +16,21 @@ namespace clock
 
         public ContentControl DateText
         {
-            get
-            {
-                return this.txtDate;
-            }
+            get { return this.txtDate; }
         }
 
         public ContentControl TimeText
         {
-            get
-            {
-                return this.txtTime;
-            }
+            get { return this.txtTime; }
         }
 
         public string MessageText
         {
-            get
-            {
-                return this.txtMessage.Text;
-            }
-
-            set
-            {
-                this.txtMessage.Text = value;
-            }
+            get { return this.txtMessage.Text; }
+            set { this.txtMessage.Text = value; }
         }
+
+        public static bool Sound { get; internal set; }
 
         public void SetTitle(String title) { }
         public string GetTitle() { return ""; }
@@ -50,7 +39,6 @@ namespace clock
         {
             InitializeComponent();
             windows.Add(this);
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -92,7 +80,7 @@ namespace clock
         private void btnCountDown_Click(object sender, RoutedEventArgs e)
         {
             timer.Pause();
-            Button b = (Button)sender;
+            Button b = sender as Button;
             timer = CountDownTimer.GetInstance(windows, (string)(b.Content), (bool)chkThrough.IsChecked);
             timer.Start();
         }
@@ -111,7 +99,7 @@ namespace clock
 
         private void btnCountDown_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Button btn = (Button)sender;
+            Button btn = sender as Button;
             InputBox ib = new InputBox();
             ib.txtValue.Text = (string)btn.Content;
             ib.Top = e.GetPosition(this).X;
@@ -123,17 +111,21 @@ namespace clock
         private void mitmDuplicate_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("Event: mitmDuplicate_Click");
-            TimerWindow w = new TimerWindow();
+
+            var c = new TimerWindowControler();
+            lstWindows.Items.Add(c);
+
+            var w = new TimerWindow(this, c);
             windows.Add(w);
             w.SetTitle("[" + (windows.Count - 1) + "]");
 
-            TimerWindowControler c = new TimerWindowControler(w);
-
-//            this.lstWindows.Items.Add(w.GetTitle());
-            this.lstWindows.Items.Add(c);
-
-
+            c.AddWindows(w);
             w.Show();
+        }
+
+        public void RemoveWindow(TimerWindowControler controler)
+        {
+            lstWindows.Items.Remove(controler);
         }
 
         private void mitmFormat_Click(object sender, RoutedEventArgs e)
@@ -144,7 +136,7 @@ namespace clock
 
         private void mitmIncrement_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem item = (MenuItem)sender;
+            var item = sender as MenuItem;
             timer.Increment(item.Header.ToString());
         }
 
@@ -158,7 +150,12 @@ namespace clock
 
         private void mitmTopmost_Click(object sender, RoutedEventArgs e)
         {
-            this.Topmost = mitmTopmost.IsChecked;
+            Topmost = mitmTopmost.IsChecked;
+        }
+
+        private void mitmSound_Click(object sender, RoutedEventArgs e)
+        {
+            Sound = mitmSound.IsChecked;
         }
 
         private void mitmHelp_Click(object sender, RoutedEventArgs e)
@@ -202,5 +199,6 @@ namespace clock
                 Console.WriteLine("Bounds Location:" + s.Bounds.Location + " Size:" + s.Bounds.Size);
             }
         }
+
     }
 }

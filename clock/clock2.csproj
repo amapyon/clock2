@@ -81,7 +81,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Alarm.cs" />
     <Compile Include="ITimerWindow.cs" />
+    <Compile Include="MainWindowModel.cs" />
     <Compile Include="TimerWindow.xaml.cs">
       <DependentUpon>TimerWindow.xaml</DependentUpon>
     </Compile>

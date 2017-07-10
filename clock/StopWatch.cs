@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace clock
 {
@@ -33,12 +34,11 @@ namespace clock
             foreach (ITimerWindow w in windows)
             {
                 UiUtil.SetEnableColor(w.TimeText);
-//                w.Closing += (_, __) => Pause();
+                //                w.Closing += (_, __) => Pause();
             }
             timerThread = new Thread(() =>
             {
                 Update();
-
             });
             stopwatch.Start();
             timerThread.Start();
@@ -68,12 +68,17 @@ namespace clock
 
                 foreach (ITimerWindow w in windows)
                 {
-                    w.Dispatcher.Invoke((Action)(() =>
+                    try
                     {
-
-                        w.TimeText.Content = String.Format("{0:0}:{1:00}", mm, ss);
+                        w.Dispatcher.Invoke(() =>
+                        {
+                            w.TimeText.Content = String.Format("{0:0}:{1:00}", mm, ss);
+                        });
                     }
-                    ));
+                    catch (TaskCanceledException ex)
+                    {
+                        return;
+                    }
                 }
 
                 Thread.Sleep(200);

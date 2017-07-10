@@ -10,33 +10,23 @@ namespace clock
     /// </summary>
     public partial class TimerWindow : Window, ITimerWindow
     {
+        private MainWindow parentWindow;
+        private TimerWindowControler controler;
+
         public ContentControl DateText
         {
-            get
-            {
-                return this.txtDate;
-            }
+            get { return this.txtDate; }
         }
 
         public ContentControl TimeText
         {
-            get
-            {
-                return this.txtTime;
-            }
+            get { return this.txtTime; }
         }
 
         public string MessageText
         {
-            get
-            {
-                return this.txtMessage.Text;
-            }
-
-            set
-            {
-                this.txtMessage.Text = value;
-            }
+            get { return this.txtMessage.Text; }
+            set { this.txtMessage.Text = value; }
         }
 
         public void SetTitle(String title)
@@ -49,9 +39,11 @@ namespace clock
             return this.Title;
         }
 
-        public TimerWindow()
+        public TimerWindow(MainWindow parentWindow, TimerWindowControler controler)
         {
             InitializeComponent();
+            this.parentWindow = parentWindow;
+            this.controler = controler;
         }
 
         private void sldFontSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -84,14 +76,17 @@ namespace clock
             }
         }
 
+        public MainWindow ParentWindow
+        {
+            get { return parentWindow; }
+        }
+
         public void setDateTextColor(Brush b)
         {
-            throw new NotImplementedException();
         }
 
         public void setTimeTextColor(Brush b)
         {
-            throw new NotImplementedException();
         }
 
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -106,7 +101,11 @@ namespace clock
             Console.WriteLine("[TimerWindow:txtMessage]PreviewKeyDown");
 
             UiUtil.KeyDownHandler(this, e);
+        }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            parentWindow.RemoveWindow(controler);
         }
     }
 }

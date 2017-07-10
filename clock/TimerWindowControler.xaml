@@ -18,7 +18,8 @@
         <CheckBox x:Name="checkBox" Grid.Column="0" Content="最前面に固定" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="4,0" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked"/>
         <Button x:Name="btnMin" Grid.Column="1" Content="最小化" VerticalAlignment="Top" Margin="0" Click="btnMin_Click"/>
         <Button x:Name="btnNormal" Grid.Column="2" Content="通常" VerticalAlignment="Top" Margin="0" Click="btnNormal_Click"/>
-        <Button x:Name="btnLeft" Grid.Column="3" Content="←" VerticalAlignment="Top" Margin="0" Click="btnLeft_Click"/>
+        <Button x:Name="btnClose" Grid.Column="3" Content="閉じる" VerticalAlignment="Top" Margin="0" Click="btnClose_Click"/>
+        <Button x:Name="btnLeft" Grid.Column="4" Content="←" VerticalAlignment="Top" Margin="0" Click="btnLeft_Click"/>
         <Button x:Name="btnRight" Grid.Column="6" Content="→" VerticalAlignment="Top" Margin="0" Click="btnRight_Click"/>
 
     </Grid>

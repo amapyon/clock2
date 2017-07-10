@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace clock
+﻿namespace clock
 {
     class NullTimer : ITimer
     {

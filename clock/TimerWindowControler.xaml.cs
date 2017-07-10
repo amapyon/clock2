@@ -12,10 +12,13 @@ namespace clock
     {
         TimerWindow w;
 
-        public TimerWindowControler(TimerWindow w)
+        public TimerWindowControler()
         {
             InitializeComponent();
+        }
 
+        internal void AddWindows(TimerWindow w)
+        {
             this.w = w;
         }
 
@@ -37,6 +40,12 @@ namespace clock
         private void btnNormal_Click(object sender, RoutedEventArgs e)
         {
             w.WindowState = WindowState.Normal;
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            w.Close();
+            w.ParentWindow.RemoveWindow(this);
         }
 
         public void UserControl_KeyDown(object sender, KeyEventArgs e)
@@ -69,5 +78,6 @@ namespace clock
 
             Console.WriteLine("Location Left: " + w.Left + " Top:" + w.Top);
         }
+
     }
 }

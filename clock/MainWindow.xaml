@@ -18,6 +18,8 @@
             <Separator/>
             <MenuItem Name="mitmTopmost" Header="最前面に固定" IsCheckable="True" Click="mitmTopmost_Click"/>
             <Separator/>
+            <MenuItem Name="mitmSound" Header="音を鳴らす" IsCheckable="True" Click="mitmSound_Click"/>
+            <Separator/>
             <MenuItem Name="mitmHelp" Header="ヘルプ" Click="mitmHelp_Click"/>
         </ContextMenu>
     </Window.ContextMenu>
@@ -33,16 +35,10 @@
                     </Slider.Foreground>
                 </Slider>
             </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="91*"></ColumnDefinition>
-                    <ColumnDefinition Width="451*"/>
-                </Grid.ColumnDefinitions>
-                <CheckBox x:Name="chkThrough" Content="マイナスカウントダウン" Foreground="White" Background="White" Grid.ColumnSpan="2" />
-            </Grid>
+            <CheckBox x:Name="chkThrough" Content="マイナスカウントダウン" Foreground="White" Background="White" DockPanel.Dock="Bottom"/>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition MinHeight="32" MaxHeight="64"/>
+                    <RowDefinition MinHeight="32"/>
                 </Grid.RowDefinitions>
                 <ListBox x:Name="lstWindows" KeyDown="lstWindows_KeyDown" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="lstWindows_MouseDoubleClick" >
                 </ListBox>
@@ -81,9 +77,9 @@
         </StackPanel>
         <Grid x:Name="pnlBase" Margin="1,0" VerticalAlignment="Top">
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="rfMessage" Height="Auto" MinHeight="12" />
+                <RowDefinition Height="Auto" MinHeight="12" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition x:Name="rfDisplay" Height="*"/>
+                <RowDefinition />
             </Grid.RowDefinitions>
             <TextBox x:Name="txtMessage" Grid.Row="0" TextWrapping="Wrap" FontSize="18" Background="{x:Null}" Foreground="White" BorderThickness="0" TextAlignment="Center" Margin="-0.969,0,0.969,0" AllowDrop="True" TextChanged="txtMessage_TextChanged" />
             <GridSplitter x:Name="gsMassagePane" VerticalAlignment="Top" HorizontalAlignment="Stretch"
@@ -94,8 +90,10 @@
                 </GridSplitter.Background>
             </GridSplitter>
             <StackPanel x:Name="pnlDisplay" Orientation="Vertical" Grid.Row="2" Grid.RowSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" >
-                <Label x:Name="txtDate" VerticalAlignment="Top" FontStretch="Expanded" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="12" Foreground="White" Content=".."/>
-                <Label x:Name="txtTime" FontStretch="UltraExpanded" VerticalContentAlignment="Center" HorizontalAlignment="Center" Content="00:00" Foreground="White" FontSize="53.333" FontWeight="Bold" VerticalAlignment="Center" Margin="0,-15,0,0"/>
+                <Label x:Name="txtDate" VerticalAlignment="Top" FontStretch="Expanded" VerticalContentAlignment="Center" HorizontalAlignment="Center" FontSize="12" Foreground="White"
+                       Content=".."/>
+                <Label x:Name="txtTime" FontStretch="UltraExpanded" VerticalContentAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="53.333" FontWeight="Bold" VerticalAlignment="Center" Margin="0,-15,0,0"
+                       Content="00:00"/>
             </StackPanel>
         </Grid>
     </DockPanel>
