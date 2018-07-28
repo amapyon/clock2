@@ -100,18 +100,15 @@ namespace clock
                             if (viewFormat == ViewFormat.S)
                             {
                                 w.TimeText.Content = String.Format("{0:0}", remainSec);
-                                if (remainSec <= 0)
-                                {
-                                    UiUtil.SetDisableColor(w.TimeText);
-                                }
                             }
                             else
                             {
                                 w.TimeText.Content = String.Format("{0:0}:{1:00}", mm, ss);
-                                if (remainSec <= 0)
-                                {
-                                    UiUtil.SetDisableColor(w.TimeText);
-                                }
+                            }
+
+                            if (remainSec <= 0)
+                            {
+                                UiUtil.SetDisableColor(w.TimeText);
                             }
 
                             if (remainSec == 0 && MainWindow.Sound)

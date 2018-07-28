@@ -19,7 +19,7 @@
             <TextBox x:Name="txtMessage" Grid.Row="0" TextWrapping="Wrap" FontSize="18" Background="{x:Null}" Foreground="White" BorderThickness="0" TextAlignment="Center" SizeChanged="txtMessage_SizeChanged" Margin="-0.969,0,0.969,0" AllowDrop="True" PreviewKeyDown="txtMessage_PreviewKeyDown" />
             <GridSplitter x:Name="gsMassagePane" VerticalAlignment="Top" HorizontalAlignment="Stretch"
                       Grid.Row="1"
-                      Width="Auto" Height="4" BorderThickness="0,0,0,0" ResizeBehavior="PreviousAndNext" >
+                      Width="Auto" Height="4" BorderThickness="0,0,0,0" ResizeBehavior="PreviousAndNext" RenderTransformOrigin="0.501,0.473" >
                 <GridSplitter.Background>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
                 </GridSplitter.Background>

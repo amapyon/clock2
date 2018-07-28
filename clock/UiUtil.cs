@@ -104,6 +104,23 @@ namespace clock
                 {
                     w.sldFontSize.Value += 1;
                 }
+                else if (e.Key == Key.Up)
+                {
+                    Console.WriteLine("[0]" + w.pnlBase.Children[0].ToString());
+                    Console.WriteLine("[1]" + w.pnlBase.Children[1].ToString());
+
+                    if (w.txtMessage.MinHeight > 0)
+                    {
+                        w.txtMessage.MinHeight -= 5;
+                    }
+                }
+                else if (e.Key == Key.Down)
+                {
+                    if (w.txtMessage.MinHeight + 5 < w.Height)
+                    {
+                       w.txtMessage.MinHeight += 5;
+                    }
+                }
             }
             Console.WriteLine("Top:" + w.Top + ", Left:" + w.Left + ", Width:" + w.Width + ", Height:" + w.Height);
 

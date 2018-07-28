@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ヘルプ" Height="117.905" Width="300" WindowStyle="ToolWindow" ResizeMode="NoResize" ShowInTaskbar="False">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="文字サイズ変更："/><Run Text="&#x9;矢印キー"/><LineBreak/><Run Text="ウィンドウサイズ変更： [Ctrl]＋矢印キー"/><LineBreak/><Run Text="ウィンドウ移動： [Shift]＋矢印キー"/><LineBreak/><Run Text="ウィンドウの四隅への移動：[Ctrl]＋[Shift]＋矢印キー"/><LineBreak/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="文字サイズ変更：矢印キー"/><Run Text="(左右)"/><LineBreak/><Run Text="メッセージエリアサイズ変更：矢印キー(上下)"/><LineBreak/><Run Text="ウィンドウサイズ変更： [Ctrl]＋矢印キー"/><LineBreak/><Run Text="ウィンドウ移動： [Shift]＋矢印キー"/><LineBreak/><Run Text="ウィンドウの四隅への移動：[Ctrl]＋[Shift]＋矢印キー"/><LineBreak/></TextBlock>
 
     </Grid>
 </Window>
